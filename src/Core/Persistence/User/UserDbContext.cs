@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.WebAPI.User;
+﻿namespace VP.Pixel.Core.Persistence.User;
 
 using Microsoft.EntityFrameworkCore;
 

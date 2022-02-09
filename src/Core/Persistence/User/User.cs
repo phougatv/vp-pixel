@@ -1,5 +1,4 @@
-﻿namespace VP.Pixel.WebAPI.User;
-
+﻿namespace VP.Pixel.Core.Persistence.User;
 public class User
 {
     public Guid Id { get; set; }

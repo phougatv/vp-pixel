@@ -1,7 +1,6 @@
 ﻿namespace VP.Pixel.WebAPI;
 
-using Microsoft.EntityFrameworkCore;
-using VP.Pixel.WebAPI.User;
+using VP.Pixel.Core.Persistence;
 
 public static class StartupExtension
 {
@@ -14,9 +13,10 @@ public static class StartupExtension
     {
         services.AddControllers();
         services
-            .AddDbContext<UserDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=VP.Pixel;Integrated Security=SSPI;Trusted_Connection=True"))
-            .AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+            .AddPersistence()
+            .AddEndpointsApiExplorer()
+            .AddSwaggerGen();
+
         return services;
     }
 

@@ -1,16 +1,17 @@
 ﻿namespace VP.Pixel.WebAPI.User;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using VP.Pixel.Core.Persistence.User;
 
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly UserDbContext _dbContext;
+    private readonly IUserRepository _userRepository;
 
-    public UsersController(UserDbContext dbContext)
+    public UsersController(IUserRepository userRepository)
     {
-        _dbContext = dbContext;
+        _userRepository = userRepository;
     }
 
     [HttpPost]
@@ -18,27 +19,12 @@ public class UsersController : ControllerBase
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));
-        //if (user.Id < 1)
-        //    throw new ArgumentOutOfRangeException(nameof(user.Id));
         if (String.IsNullOrEmpty(user.EmailId))
             throw new ArgumentNullException(nameof(user.EmailId));
 
-        var entityEntry = _dbContext.Users.Add(user);
-        if (entityEntry == null)
-            throw new Exception($"Failed to add user");
-
-        var isSuccessfullyAdded = EntityState.Added == entityEntry.State;
-
-        try
-        {
-            _dbContext.SaveChanges();
+        var isCreated = _userRepository.Create(user);
+        if (isCreated)
             return Ok();
-        }
-        catch (Exception ex)
-        {
-            //Log the exception message -> ex.Message
-        }
-
         return StatusCode(StatusCodes.Status409Conflict, "Failed to create user");
     }
 
@@ -47,7 +33,8 @@ public class UsersController : ControllerBase
     {
         if (Guid.Empty == id)
             return BadRequest("Invalid input");
-        var user = _dbContext.Users.SingleOrDefault(x => x.Id == id);
+
+        var user = _userRepository.ReadById(id);
         if (user == null)
             return NotFound();
         return Ok(user);

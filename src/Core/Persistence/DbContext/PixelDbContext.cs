@@ -1,10 +1,11 @@
-﻿namespace VP.Pixel.Core.Persistence.User;
+﻿namespace VP.Pixel.Core.Persistence.DbContext;
 
 using Microsoft.EntityFrameworkCore;
+using VP.Pixel.Core.Persistence.User;
 
-public class UserDbContext : DbContext
+internal class PixelDbContext : DbContext
 {
-    public UserDbContext(DbContextOptions<UserDbContext> options)
+    public PixelDbContext(DbContextOptions<PixelDbContext> options)
             : base(options)
     {
 

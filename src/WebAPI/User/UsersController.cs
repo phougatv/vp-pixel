@@ -24,12 +24,21 @@ public class UsersController : ControllerBase
 
         var isCreated = _userRepository.Create(user);
         if (isCreated)
-            return Ok();
+            return StatusCode(StatusCodes.Status201Created);
         return StatusCode(StatusCodes.Status409Conflict, "Failed to create user");
     }
 
+    [HttpDelete("{id}")]
+    public IActionResult Delete(Guid id)
+    {
+        var isDeleted = _userRepository.Delete(id);
+        if (isDeleted)
+            return NoContent();
+        return StatusCode(StatusCodes.Status500InternalServerError);
+    }
+
     [HttpGet("{id}")]
-    public IActionResult ReadUser(Guid id)
+    public IActionResult Read(Guid id)
     {
         if (Guid.Empty == id)
             return BadRequest("Invalid input");
@@ -38,5 +47,14 @@ public class UsersController : ControllerBase
         if (user == null)
             return NotFound();
         return Ok(user);
+    }
+
+    [HttpPut]
+    public IActionResult Update(User user)
+    {
+        var isUpdated = _userRepository.Update(user);
+        if (isUpdated)
+            return NoContent();
+        return StatusCode(StatusCodes.Status500InternalServerError);
     }
 }

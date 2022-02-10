@@ -1,6 +1,6 @@
 ﻿namespace VP.Pixel.WebAPI;
 
-using VP.Pixel.Core.Persistence;
+using VP.Pixel.Core.Persistence.Extensions;
 
 public static class StartupExtension
 {

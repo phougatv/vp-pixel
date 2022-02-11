@@ -3,13 +3,13 @@
 using Microsoft.AspNetCore.Mvc;
 using VP.Pixel.Core.Persistence.User;
 
-[Route("api/[controller]")]
+[Route("api/users")]
 [ApiController]
-public class UsersController : ControllerBase
+public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
 
-    public UsersController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }

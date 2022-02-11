@@ -9,11 +9,13 @@ public static class StartupExtension
     /// </summary>
     /// <param name="services">The <see cref="IServiceCollection"/></param>
     /// <returns></returns>
-    internal static IServiceCollection AddPixelServices(this IServiceCollection services)
+    internal static IServiceCollection AddPixelServices(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddControllers();
         services
-            .AddPersistence()
+            .AddPersistence(configuration)
             .AddEndpointsApiExplorer()
             .AddSwaggerGen();
 
@@ -26,7 +28,7 @@ public static class StartupExtension
     /// <param name="app">The <see cref="ApplicationBuilder"/></param>
     /// <param name="env">The <see cref="IWebHostEnvironment"/></param>
     /// <param name="logger">The <see cref="ILogger"/></param>
-    internal static void UseToConfigureRequestPipeline(this WebApplication app)
+    internal static void UseItToConfigureRequestPipeline(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
@@ -35,8 +37,10 @@ public static class StartupExtension
                 .UseSwaggerUI();
         }
 
-        app.UseHttpsRedirection();
-        app.UseAuthorization();
+        app
+            .UseHttpsRedirection()
+            .UseAuthorization();
+
         app.MapControllers();
     }
 }

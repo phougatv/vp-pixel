@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.Contracts;
+﻿namespace VP.Pixel.Core.Persistence.Base.Repository;
 
 public interface IRepository<TEntity>
     where TEntity : class

@@ -1,8 +1,7 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.Implementations;
+﻿namespace VP.Pixel.Core.Persistence.Base.Repository;
 
 using Microsoft.EntityFrameworkCore;
 using System;
-using VP.Pixel.Core.Persistence.Base.Contracts;
 using VP.Pixel.Core.Persistence.DbContext;
 
 internal abstract class BaseRepository<TEntity> : IRepository<TEntity>

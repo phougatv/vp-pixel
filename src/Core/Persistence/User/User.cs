@@ -2,7 +2,7 @@
 
 using VP.Pixel.Core.Persistence.Base;
 
-public class User : BaseEntity
+public class User : BaseEntity<Guid>
 {
     public String EmailId { get; set; }
     public String UserName { get; set; }

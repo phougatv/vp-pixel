@@ -5,8 +5,8 @@ using System;
 using VP.Pixel.Core.Persistence.Base;
 using VP.Pixel.Core.Persistence.DbContext;
 
-internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
-    where TEntity : BaseEntity
+internal abstract class BaseRepository<TEntity> : IRepository<Guid, TEntity>
+    where TEntity : BaseEntity<Guid>
 {
     private readonly IUnitOfWorkDbContext<PixelDbContext> _uow;
     private readonly DbSet<TEntity> _dbSet;
@@ -22,7 +22,7 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
     }
 
     #region Public Methods
-    Boolean IRepository<TEntity>.Create(TEntity entity)
+    public Boolean Create(TEntity entity)
     {
         try
         {
@@ -38,8 +38,7 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
             return false;
         }
     }
-
-    Boolean IRepository<TEntity>.Delete(Guid id)
+    public Boolean Delete(Guid id)
     {
         try
         {
@@ -59,10 +58,8 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
             return false;
         }
     }
-
-    TEntity IRepository<TEntity>.ReadById(Guid id) => InternalReadById(id);
-
-    Boolean IRepository<TEntity>.Update(TEntity entity)
+    public TEntity ReadById(Guid id) => InternalReadById(id);
+    public Boolean Update(TEntity entity)
     {
         try
         {
@@ -70,7 +67,7 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
             if (null == existingEntity)
                 throw new Exception($"Entity with id: {entity.Id} not found");
 
-            var propertiesToBeSkipped = typeof(BaseEntity).GetProperties().Select(p => p.Name);
+            var propertiesToBeSkipped = typeof(BaseEntity<Guid>).GetProperties().Select(p => p.Name);
             var requiredPropertiesInfo = typeof(TEntity).GetProperties().Where(p => !propertiesToBeSkipped.Contains(p.Name));
 
             foreach (var propertyInfo in requiredPropertiesInfo)

@@ -22,7 +22,7 @@ public class UnitOfWork : IUnitOfWork, IUnitOfWorkDbContext<PixelDbContext>
         var utcNow = DateTime.UtcNow;
         foreach (var changedEntity in Context.ChangeTracker.Entries())
         {
-            if (changedEntity.Entity is not BaseEntity entity)
+            if (changedEntity.Entity is not BaseEntity<Guid> entity)
                 continue;
             if (changedEntity.State == EntityState.Modified)
             {

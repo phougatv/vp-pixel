@@ -2,11 +2,12 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public abstract class BaseEntity
+public abstract class BaseEntity<TId>
+    where TId : struct, IEquatable<TId>
 {
     /// <summary>The id</summary>
     [Key]
-    public Guid Id { get; set; }
+    public TId Id { get; set; }
 
     /// <summary>The created on</summary>
     public DateTime CreatedOn { get; set; }

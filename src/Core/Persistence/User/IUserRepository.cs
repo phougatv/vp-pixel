@@ -2,7 +2,7 @@
 
 using VP.Pixel.Core.Persistence.Base;
 
-public interface IUserRepository : IRepository<User>
+public interface IUserRepository : IRepository<Guid, User>
 {
 
 }

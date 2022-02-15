@@ -26,7 +26,6 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         try
         {
-            entity.CreatedOn = DateTime.UtcNow;
             var entityEntry = _dbSet.Add(entity);
             if (entityEntry == null)
                 throw new Exception($"Failed to add the entity to DbSet<{typeof(TEntity).FullName}>");
@@ -80,7 +79,6 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
                 existingEntity.GetType().GetProperty(propertyInfo.Name).SetValue(existingEntity, value);
             }
 
-            existingEntity.UpdatedOn = DateTime.UtcNow;
             return true;
         }
         catch (Exception ex)

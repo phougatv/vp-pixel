@@ -5,13 +5,13 @@ using System;
 using VP.Pixel.Core.Persistence.Base;
 using VP.Pixel.Core.Persistence.DbContext;
 
-internal abstract class BaseRepository<TEntity> : IRepository<Guid, TEntity>
-    where TEntity : BaseEntity<Guid>
+internal abstract class Repository<TEntity> : IRepository<Guid, TEntity>
+    where TEntity : Entity<Guid>
 {
     private readonly IUnitOfWorkDbContext<PixelDbContext> _uow;
     private readonly DbSet<TEntity> _dbSet;
 
-    protected BaseRepository(IUnitOfWorkDbContext<PixelDbContext> uow)
+    protected Repository(IUnitOfWorkDbContext<PixelDbContext> uow)
     {
         if (null == uow)
             throw new ArgumentNullException(nameof(uow));
@@ -67,7 +67,7 @@ internal abstract class BaseRepository<TEntity> : IRepository<Guid, TEntity>
             if (null == existingEntity)
                 throw new Exception($"Entity with id: {entity.Id} not found");
 
-            var propertiesToBeSkipped = typeof(BaseEntity<Guid>).GetProperties().Select(p => p.Name);
+            var propertiesToBeSkipped = typeof(Entity<Guid>).GetProperties().Select(p => p.Name);
             var requiredPropertiesInfo = typeof(TEntity).GetProperties().Where(p => !propertiesToBeSkipped.Contains(p.Name));
 
             foreach (var propertyInfo in requiredPropertiesInfo)

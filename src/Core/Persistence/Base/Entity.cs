@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public abstract class BaseEntity<TId>
+public abstract class Entity<TId>
     where TId : struct, IEquatable<TId>
 {
     /// <summary>The id</summary>

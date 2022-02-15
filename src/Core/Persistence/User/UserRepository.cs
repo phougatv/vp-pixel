@@ -4,7 +4,7 @@ using VP.Pixel.Core.Persistence.Base;
 using VP.Pixel.Core.Persistence.Base.Concretes;
 using VP.Pixel.Core.Persistence.DbContext;
 
-internal class UserRepository : BaseRepository<User>, IUserRepository
+internal class UserRepository : Repository<User>, IUserRepository
 {
     public UserRepository(IUnitOfWorkDbContext<PixelDbContext> uow)
         : base(uow)

@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using VP.Pixel.Core.Persistence.User;
 
-internal class PixelDbContext : DbContext
+public class PixelDbContext : DbContext
 {
     public PixelDbContext(DbContextOptions<PixelDbContext> options)
             : base(options)

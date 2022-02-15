@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using VP.Pixel.Core.Persistence.Base.UnitOfWork;
 using VP.Pixel.Core.Persistence.DbContext;
 using VP.Pixel.Core.Persistence.User;
 
@@ -16,6 +17,9 @@ public static class Extension
 
         services
             .AddDbContext<PixelDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(connectionString))
+            .AddScoped<UnitOfWork>()
+            .AddScoped<IUnitOfWorkDbContext<PixelDbContext>>(s => s.GetRequiredService<UnitOfWork>())
+            .AddScoped<IUnitOfWork>(s => s.GetRequiredService<UnitOfWork>())
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;

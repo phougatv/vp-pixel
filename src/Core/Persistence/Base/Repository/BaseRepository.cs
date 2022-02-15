@@ -2,18 +2,23 @@
 
 using Microsoft.EntityFrameworkCore;
 using System;
+using VP.Pixel.Core.Persistence.Base.UnitOfWork;
 using VP.Pixel.Core.Persistence.DbContext;
 
 internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : BaseEntity
 {
-    private readonly DbContext _dbContext;
+    private readonly IUnitOfWorkDbContext<PixelDbContext> _uow;
     private readonly DbSet<TEntity> _dbSet;
 
-    protected BaseRepository(PixelDbContext dbContext)
+    protected BaseRepository(IUnitOfWorkDbContext<PixelDbContext> uow)
     {
-        _dbContext = dbContext;
-        _dbSet = dbContext.Set<TEntity>();
+        if (null == uow)
+            throw new ArgumentNullException(nameof(uow));
+        if (null == uow.Context)
+            throw new ArgumentNullException($"{nameof(uow.Context)} in {nameof(IUnitOfWorkDbContext<PixelDbContext>)} must not be null");
+        _uow = uow;
+        _dbSet = uow.Context.Set<TEntity>();
     }
 
     #region Public Methods
@@ -21,16 +26,12 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         try
         {
+            entity.CreatedOn = DateTime.UtcNow;
             var entityEntry = _dbSet.Add(entity);
             if (entityEntry == null)
                 throw new Exception($"Failed to add the entity to DbSet<{typeof(TEntity).FullName}>");
 
-            var isAdded = EntityState.Added == entityEntry.State;
-            if (!isAdded)
-                return false;
-
-            _dbContext.SaveChanges();
-            return true;
+            return EntityState.Added == entityEntry.State;
         }
         catch (Exception ex)
         {
@@ -51,7 +52,6 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
             if (entityEntry == null)
                 throw new Exception($"Failed to remove the entity from DbSet<{typeof(TEntity).FullName}>");
 
-            _dbContext.SaveChanges();
             return EntityState.Deleted == entityEntry.State;
         }
         catch (Exception ex)
@@ -81,7 +81,6 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
             }
 
             existingEntity.UpdatedOn = DateTime.UtcNow;
-            _dbContext.SaveChanges();
             return true;
         }
         catch (Exception ex)
@@ -93,6 +92,6 @@ internal abstract class BaseRepository<TEntity> : IRepository<TEntity>
     #endregion Public Methods
 
     #region Private Methods
-    private TEntity InternalReadById(Guid id) => _dbSet.SingleOrDefault(entity => entity.Id == id);
+    private TEntity InternalReadById(Guid id) => _dbSet.SingleOrDefault(entity => entity.Id == id) ?? default;
     #endregion Private Methods
 }

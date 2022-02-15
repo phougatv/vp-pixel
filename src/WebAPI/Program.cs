@@ -15,10 +15,13 @@ builder.Configuration
 builder.Services
     .AddControllers();
 
+var connectionString = builder.Configuration
+            .GetSection("ConnectionStrings")
+            .Get<IDictionary<String, String>>()["VP.Pixel"];
+
 builder.Services
-    //.AddDbContext<PixelDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(connectionString))
-    //.AddPixelUnitOfWork<PixelDbContext>(builder.Configuration)
-    .AddPixelSharedPersistence<AppDbContext>(builder.Configuration)
+    .AddDbContext<AppDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(connectionString))
+    .AddPixelSharedPersistence<AppDbContext>()
     .AddScoped<IUserRepository, UserRepository>()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();

@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VP.Pixel.Shared.Persistence.Base;
 using VP.Pixel.WebAPI.Users.DataAccess;
+using VP.Pixel.WebAPI.Users.DataAccess.Poco;
 
 [Route("api/users")]
 [ApiController]

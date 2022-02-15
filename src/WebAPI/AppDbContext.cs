@@ -1,7 +1,7 @@
 ﻿namespace VP.Pixel.WebAPI;
 
 using Microsoft.EntityFrameworkCore;
-using VP.Pixel.WebAPI.Users.DataAccess;
+using VP.Pixel.WebAPI.Users.DataAccess.Poco;
 
 public class AppDbContext : DbContext
 {

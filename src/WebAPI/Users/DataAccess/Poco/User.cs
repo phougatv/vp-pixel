@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.WebAPI.Users.DataAccess;
+﻿namespace VP.Pixel.WebAPI.Users.DataAccess.Poco;
 
 using VP.Pixel.Shared.Persistence.Base;
 

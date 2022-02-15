@@ -1,7 +1,8 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.UnitOfWork;
+﻿namespace VP.Pixel.Core.Persistence.Base.Concretes;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using VP.Pixel.Core.Persistence.Base;
 using VP.Pixel.Core.Persistence.DbContext;
 
 public class UnitOfWork : IUnitOfWork, IUnitOfWorkDbContext<PixelDbContext>

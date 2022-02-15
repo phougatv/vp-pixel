@@ -3,7 +3,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using VP.Pixel.Core.Persistence.Base.UnitOfWork;
+using VP.Pixel.Core.Persistence.Base;
+using VP.Pixel.Core.Persistence.Base.Concretes;
 using VP.Pixel.Core.Persistence.DbContext;
 using VP.Pixel.Core.Persistence.User;
 

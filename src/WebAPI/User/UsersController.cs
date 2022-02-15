@@ -1,7 +1,7 @@
 ﻿namespace VP.Pixel.WebAPI.User;
 
 using Microsoft.AspNetCore.Mvc;
-using VP.Pixel.Core.Persistence.Base.UnitOfWork;
+using VP.Pixel.Core.Persistence.Base;
 using VP.Pixel.Core.Persistence.User;
 
 [Route("api/users")]

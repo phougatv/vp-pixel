@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.UnitOfWork;
+﻿namespace VP.Pixel.Core.Persistence.Base;
 
 public interface IUnitOfWorkDbContext<TContext>
 {

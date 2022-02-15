@@ -1,11 +1,11 @@
-﻿namespace VP.Pixel.Core.Persistence.DbContext;
+﻿namespace VP.Pixel.WebAPI;
 
 using Microsoft.EntityFrameworkCore;
-using VP.Pixel.Core.Persistence.User;
+using VP.Pixel.WebAPI.Users.DataAccess;
 
-public class PixelDbContext : DbContext
+public class AppDbContext : DbContext
 {
-    public PixelDbContext(DbContextOptions<PixelDbContext> options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
     {
 

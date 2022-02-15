@@ -1,8 +1,8 @@
-﻿namespace VP.Pixel.WebAPI.User;
+﻿namespace VP.Pixel.WebAPI.Users;
 
 using Microsoft.AspNetCore.Mvc;
-using VP.Pixel.Core.Persistence.Base;
-using VP.Pixel.Core.Persistence.User;
+using VP.Pixel.Shared.Persistence.Base;
+using VP.Pixel.WebAPI.Users.DataAccess;
 
 [Route("api/users")]
 [ApiController]

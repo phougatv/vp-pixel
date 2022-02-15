@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.Core.Persistence.Base;
+﻿namespace VP.Pixel.Shared.Persistence.Base;
 
 public interface IRepository<TId, TEntity>
     where TId : struct, IEquatable<TId>

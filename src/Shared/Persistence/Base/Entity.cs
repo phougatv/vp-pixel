@@ -1,4 +1,4 @@
-﻿namespace VP.Pixel.Core.Persistence.Base;
+﻿namespace VP.Pixel.Shared.Persistence.Base;
 
 using System.ComponentModel.DataAnnotations;
 

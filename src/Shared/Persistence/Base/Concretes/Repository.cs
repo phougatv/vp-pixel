@@ -1,22 +1,23 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.Concretes;
+﻿namespace VP.Pixel.Shared.Persistence.Base.Concretes;
 
 using Microsoft.EntityFrameworkCore;
 using System;
-using VP.Pixel.Core.Persistence.Base;
-using VP.Pixel.Core.Persistence.DbContext;
+using VP.Pixel.Shared.Persistence.Base;
 
-internal abstract class Repository<TEntity> : IRepository<Guid, TEntity>
-    where TEntity : Entity<Guid>
+public abstract class Repository<TId, TEntity, TContext> : IRepository<TId, TEntity>
+    where TId : struct, IEquatable<TId>
+    where TEntity : Entity<TId>
+    where TContext : DbContext
 {
-    private readonly IUnitOfWorkDbContext<PixelDbContext> _uow;
+    private readonly IUnitOfWorkDbContext<TContext> _uow;
     private readonly DbSet<TEntity> _dbSet;
 
-    protected Repository(IUnitOfWorkDbContext<PixelDbContext> uow)
+    protected Repository(IUnitOfWorkDbContext<TContext> uow)
     {
         if (null == uow)
             throw new ArgumentNullException(nameof(uow));
         if (null == uow.Context)
-            throw new ArgumentNullException($"{nameof(uow.Context)} in {nameof(IUnitOfWorkDbContext<PixelDbContext>)} must not be null");
+            throw new ArgumentNullException($"{nameof(uow.Context)} in {nameof(IUnitOfWorkDbContext<TContext>)} must not be null");
         _uow = uow;
         _dbSet = uow.Context.Set<TEntity>();
     }
@@ -38,7 +39,8 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity>
             return false;
         }
     }
-    public Boolean Delete(Guid id)
+
+    public Boolean Delete(TId id)
     {
         try
         {
@@ -58,7 +60,8 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity>
             return false;
         }
     }
-    public TEntity ReadById(Guid id) => InternalReadById(id);
+    public TEntity ReadById(TId id) => InternalReadById(id);
+
     public Boolean Update(TEntity entity)
     {
         try
@@ -87,6 +90,6 @@ internal abstract class Repository<TEntity> : IRepository<Guid, TEntity>
     #endregion Public Methods
 
     #region Private Methods
-    private TEntity InternalReadById(Guid id) => _dbSet.SingleOrDefault(entity => entity.Id == id) ?? default;
+    private TEntity InternalReadById(TId id) => _dbSet.SingleOrDefault(entity => entity.Id.Equals(id)) ?? default;
     #endregion Private Methods
 }

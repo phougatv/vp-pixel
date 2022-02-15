@@ -1,6 +1,6 @@
-﻿namespace VP.Pixel.Core.Persistence.User;
+﻿namespace VP.Pixel.WebAPI.Users.DataAccess;
 
-using VP.Pixel.Core.Persistence.Base;
+using VP.Pixel.Shared.Persistence.Base;
 
 public class User : Entity<Guid>
 {

@@ -1,21 +1,21 @@
-﻿namespace VP.Pixel.Core.Persistence.Base.Concretes;
+﻿namespace VP.Pixel.Shared.Persistence.Base.Concretes;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using VP.Pixel.Core.Persistence.Base;
-using VP.Pixel.Core.Persistence.DbContext;
+using VP.Pixel.Shared.Persistence.Base;
 
-public class UnitOfWork : IUnitOfWork, IUnitOfWorkDbContext<PixelDbContext>
+public class UnitOfWork<TContext> : IUnitOfWork, IUnitOfWorkDbContext<TContext>
+    where TContext : DbContext
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public UnitOfWork(PixelDbContext pixelDbContext, IServiceProvider serviceProvider)
+    public UnitOfWork(TContext _dbContext, IServiceProvider serviceProvider)
     {
-        Context = pixelDbContext;
+        Context = _dbContext;
         _serviceProvider = serviceProvider;
     }
 
-    public PixelDbContext Context { get; }
+    public TContext Context { get; }
 
     public Int32 Commit()
     {

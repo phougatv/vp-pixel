@@ -1,4 +1,7 @@
-using VP.Pixel.Core.Persistence.Extensions;
+using Microsoft.EntityFrameworkCore;
+using VP.Pixel.Shared.Persistence;
+using VP.Pixel.WebAPI;
+using VP.Pixel.WebAPI.Users.DataAccess;
 
 //Add configuration & services to the DI container
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -11,8 +14,12 @@ builder.Configuration
 
 builder.Services
     .AddControllers();
+
 builder.Services
-    .AddPersistence(builder.Configuration)
+    //.AddDbContext<PixelDbContext>(dbContextOptionsBuilder => dbContextOptionsBuilder.UseSqlServer(connectionString))
+    //.AddPixelUnitOfWork<PixelDbContext>(builder.Configuration)
+    .AddPixelSharedPersistence<AppDbContext>(builder.Configuration)
+    .AddScoped<IUserRepository, UserRepository>()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen();
 

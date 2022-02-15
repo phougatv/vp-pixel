@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Persistence\VP.Pixel.Core.Persistence.csproj" />
+    <ProjectReference Include="..\Shared\VP.Pixel.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
